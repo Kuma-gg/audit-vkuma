@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>AUDIT</title>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- BOOTSTRAP - BOOTSWATCH THEME - COSMOS -->
+<link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<!-- CUSTOM CSS -->
+<style>
+  body {
+    font-family: "Lato", sans-serif
+  }
+
+  .mySlides {
+    display: none
+  }
+
+  body {
+    background: #b4f18e;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(right, #b4f18e, #b4f18e);
+    background: -moz-linear-gradient(right, #b4f18e, #b4f18e);
+    background: -o-linear-gradient(right, #b4f18e, #b4f18e);
+    background: linear-gradient(to left, #b4f18e, #b4f18e);
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+</style>
+
+<body>
+
+  <!-- Navbar -->
+  {{#if user_session}}
+
+  <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)"
+        onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="/about" class="w3-bar-item w3-button w3-padding-large w3-hide-small">HOME</a>
+      <a href="/users/list" class="w3-bar-item w3-button w3-padding-large">GESTION DE USUARIOS </a>
+      {{#ifeq user_session.role "5c9fc7ff9a56991f9c78b5a7"}}
+      <a href="/parameters/show" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PARAMETRIZACION</a>
+      {{/ifeq}}
+
+
+      <a href="/users/logout" class="w3-bar-item w3-button w3-padding-large  w3-right">SALIR</a>
+
+    </div>
+  </div>
+  {{/if}}
+
+
+  <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+  <nav>
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+      <a href="/about" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Home</a>
+      <a href="/users/list" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Gestion de
+        Usuarios</a>
+      {{#ifeq user.role "5c9fc7ff9a56991f9c78b5a7"}}
+      <a href="/parameters/show" class="w3-bar-item w3-button w3-padding-large"
+        onclick="myFunction()">Parametrizacion</a>
+      {{/ifeq}}
+      <a href="/users/logout" class="w3-bar-item w3-button w3-padding-large">Salir</a>
+    </div> <br><br>
+  </nav>
+  <main class="container">
+    {{> messages }}
+    {{> errors }}
+
+    {{{body}}}
+
+  </main>
+  <!-- Footer -->
+  <br>
+  <footer class="w3-container w3-padding-16 w3-center w3-opacity w3-light-grey w3-xlarge">
+    {{#ifeq user_session.role "5c9fc7ff9a56991f9c78b5a6"}}
+    <h5> <b>Su contraseña caduca el
+        {{dateFormat user_session.passwordExpireTime }} por favor cambie su contraseña , antes de la fecha
+        especificada.</b> </h5>
+    {{/ifeq}}
+  </footer>
+  <script src="http://momentjs.com/downloads/moment.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script>
+
+    // Automatic Slideshow - change image every 4 seconds
+    var myIndex = 0;
+
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    var modal = document.getElementById('ticketModal');
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

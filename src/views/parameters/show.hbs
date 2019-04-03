@@ -1,0 +1,43 @@
+<br>
+{{#each messages }}
+
+<div class="alert alert-primary fade show" role="alert">
+    {{text}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/each}}
+
+
+
+
+<div class="col-md-8 order-md-1">
+    <br>
+    <h3 class="mb-3">Configuracion de Contraseñas</h4>
+
+        <hr class="mb-4">
+        <form class="needs-validation" action="/parameters/update" method="POST">
+            {{#each params}}
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text col-md-16 mb-3" onmouseover="{{name}}">{{name}}</span>
+                </div>
+                <input type="text" class="form-control" id="{{code}}" name="{{code}}" value="{{value}}">
+
+            </div>
+            {{/each}}
+            <div class="input-group" style="background-color: rgb(250, 250, 250);">
+                <h5>Para activar los caracteres especiales el texto debe ser "SI" ,Activara los caracteres especiales
+                    como
+                    <br>* Mayusculas
+                    <br>* Minusculas
+                    <br>* Sin Espacios
+                    <br>* Digitos
+                    <br> Estos deberan ser aplicados en la contraseña.</h5>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Guardar Cambios</button>
+        </form>
+</div>

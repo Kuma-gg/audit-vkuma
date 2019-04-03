@@ -1,0 +1,66 @@
+{{#ifeq user_session.role "5c9fc7ff9a56991f9c78b5a7"}}
+<div style="padding:1.5rem">
+    <a href="/users/create" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Crear Usuario</a>
+</div>
+{{/ifeq}}
+<br>
+<div class="row">
+    {{#each users}}
+    {{!-- admin --}}
+    {{#ifeq ../user_session.role "5c9fc7ff9a56991f9c78b5a7"}}
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    {{name}}
+                </h4>
+                <h4>
+                    {{email}}
+                </h4>
+                <h4>
+                    {{role.name}}
+                </h4>
+            </div>
+            <div style="padding:0.5rem">
+                {{#ifeq ../user_session.role "5c9fc7ff9a56991f9c78b5a7"}}
+                <a href="/users/edit/{{_id}}" class="btn btn-primary btn-lg " role="button"
+                    aria-pressed="false">Editar</a>
+                <a href="/users/delete/{{_id}}" class="btn btn-danger btn-lg " role="button"
+                    aria-pressed="false">Eliminar</a>
+                {{/ifeq}}
+
+            </div>
+        </div>
+
+    </div>
+    {{/ifeq}}
+    {{!-- users --}}
+    {{#ifeq3 ../user_session.role "5c9fc7ff9a56991f9c78b5a6" ../user_session._id this._id }}
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    {{name}}
+                </h4>
+                <h4>
+                    {{email}}
+                </h4>
+                <h4>
+                    {{role.name}}
+                </h4>
+            </div>
+            <div style="padding:0.5rem">
+                <a href="/users/edit/{{_id}}" class="btn btn-primary btn-lg " role="button"
+                    aria-pressed="false">Editar</a>
+            </div>
+        </div>
+
+    </div>
+    {{/ifeq3}}
+
+
+
+    {{/each}}
+</div>
